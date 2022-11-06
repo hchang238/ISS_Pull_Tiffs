@@ -1,0 +1,29 @@
+services:
+  frontend:
+    container_name: restapi
+    image: nginx:1.23.2
+    ports:
+      - 8080:80
+    volumes:
+      - ./html:/usr/share/nginx/html
+  database:
+    container_name: db
+    image: mysql:8.0.31
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: SethEvan
+      MYSQL_USER: Mclovin
+      MYSQL_PASSWORD: SUPERBAD
+    volumes:
+      - ./volumes/mysql/data:/var/lib/mysql
+      - ./volumes/initializationScripts/init.sql:/docker-entrypoint-initdb.d/1.sql
+  backend:
+    container_name: pysort
+    image: python:3.11.0
+    ports:
+      - 8090:8080
+    volumes:
+      - ./python:/python
+    command: tail -f /dev/null
