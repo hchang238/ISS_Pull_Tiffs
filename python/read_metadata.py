@@ -51,5 +51,5 @@ def sanitize_files(txt_path, json_dir_path):
         json.dump(raw_json, sanitized_file, ensure_ascii=True, indent=4)
 
 if __name__ == "__main__":
-    sanitize_files("../images/SPECTRUM/RGB brightfield/Uncropped tifs and metadata/Image03944_2019_06_07__12_11_18_RGB.txt", "../volumes/mysql/files/metadata/")
+    sanitize_files("../images/SPECTRUM/RGB brightfield/Uncropped tifs and metadata/Image03944_2019_06_07__12_11_18_RGB.txt", "../volumes/postgres/data/files/metadata")
     #sanitize_files("../images/SPECTRUM/Monochrome RFP/Uncropped tifs and metadata/Image02340_2019_06_04__00_10_00_Mono.txt")
