@@ -3,27 +3,37 @@ services:
     container_name: restapi
     image: nginx:1.23.2
     ports:
-      - 8080:80
+      - 8080:8080
     volumes:
       - ./html:/usr/share/nginx/html
   database:
     container_name: db
-    image: mysql:8.0.31
+    image: postgres:15.0
     ports:
-      - 3306:3306
+      - 5432:5432
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: SethEvan
-      MYSQL_USER: Mclovin
-      MYSQL_PASSWORD: SUPERBAD
+      POSTGRES_USER: McLovin
+      POSTGRES_PASSWORD: SUPERBAD
     volumes:
-      - ./volumes/mysql/data:/var/lib/mysql
+      - ./volumes/postgres/data:/var/lib/postgres/data
       - ./volumes/initializationScripts/init.sql:/docker-entrypoint-initdb.d/1.sql
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: dbmanage
+    depends_on:
+      - database
+    ports:
+      - 5051:80
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: root
   backend:
     container_name: pysort
     image: python:3.11.0
     ports:
-      - 8090:8080
+      - 8090:8090
     volumes:
       - ./python:/python
     command: tail -f /dev/null
